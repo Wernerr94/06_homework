@@ -1,34 +1,37 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import css from './ContactList.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeContact } from 'components/redux/redux';
 
-export default class ContactList extends Component {
-  render() {
-    const { contactsArr, onDelete } = this.props;
-
-    return (
-      <ul className={css.contactsList}>
-        {contactsArr.length > 0 &&
-          contactsArr.map(c => {
-            return (
-              <li key={c.id} className={css.contact}>
-                {c.name}: {c.number}
-                <button onClick={() => onDelete(c.id)}>Delete</button>
-              </li>
-            );
-          })}
-      </ul>
+export default function ContactList() {
+  const contacts = useSelector(state => state.phonebook.contacts.items);
+  const filter = useSelector(state => state.phonebook.contacts.filter);
+  const dispatch = useDispatch();
+  const handleDelete = id => {
+    dispatch(removeContact(id));
+  };
+  const filterContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  }
+  };
+  const contactsArr = filterContacts();
+  return (
+    <ul className={css.contactsList}>
+      {contactsArr.length > 0 &&
+        contactsArr.map(contact => {
+          return (
+            <li key={contact.id} className={css.contact}>
+              {contact.name}: {contact.number}
+              <button
+                className={css.deleteButton}
+                onClick={() => handleDelete(contact.id)}
+              >
+                Delete
+              </button>
+            </li>
+          );
+        })}
+    </ul>
+  );
 }
-
-ContactList.propTypes = {
-  contactsArr: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onDelete: PropTypes.func.isRequired,
-};
