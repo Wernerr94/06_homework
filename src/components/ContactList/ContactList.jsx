@@ -7,9 +7,7 @@ export default function ContactList() {
   const contacts = useSelector(state => state.phonebook.contacts.items);
   const filter = useSelector(state => state.phonebook.contacts.filter);
   const dispatch = useDispatch();
-  const handleDelete = id => {
-    dispatch(removeContact(id));
-  };
+
   const filterContacts = () => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
@@ -25,7 +23,7 @@ export default function ContactList() {
               {contact.name}: {contact.number}
               <button
                 className={css.deleteButton}
-                onClick={() => handleDelete(contact.id)}
+                onClick={() => dispatch(removeContact(contact.id))}
               >
                 Delete
               </button>
