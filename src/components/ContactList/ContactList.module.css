@@ -1,0 +1,21 @@
+.contactsList {
+    width: 600px;
+    
+    
+   
+}
+.contact {
+    margin: 10px;
+    font-size: 20px;
+    
+}
+button{
+    margin-left: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    border-color: rgb(229, 229, 229);
+}
+
+button:active {
+    background-color: #698bf8;
+  }
