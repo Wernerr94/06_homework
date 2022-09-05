@@ -1,7 +1,7 @@
 import React from 'react';
 import './Filter.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilterValue } from 'components/redux/redux';
+import { getFilterValue } from 'components/redux/actions';
 
 export default function Filter() {
   const filter = useSelector(state => state.phonebook.contacts.filter);
